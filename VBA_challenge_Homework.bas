@@ -1,4 +1,3 @@
-Attribute VB_Name = "Module1"
 Sub stock_data()
 
 
@@ -60,7 +59,14 @@ Sub stock_data()
             ws.Range("J" & summary_Row) = yearly_change
             
         End If
-            
+        
+        If yearly_change > 0 Then
+            ws.Range("J" & summary_Row).Interior.ColorIndex = 4
+        Else
+            ws.Range("J" & summary_Row).Interior.ColorIndex = 3
+        
+        End If
+        
         If yearly_change <> 0 And year_open <> 0 Then
             percetage_change = percentage_change + (yearly_change / year_open)
             ws.Range("K" & summary_Row) = percentage_change
@@ -70,15 +76,6 @@ Sub stock_data()
             ws.Range("K" & summary_Row).NumberFormat = "0.00%"
         
         End If
-        
-        If yearly_change > 0 Then
-            ws.Range("J" & summary_Row).Interior.ColorIndex = 4
-        Else
-            ws.Range("J" & summary_Row).Interior.ColorIndex = 3
-        
-        End If
-        
-       
         
     Next i
 
@@ -91,7 +88,7 @@ Sub stock_data()
     Dim bad_ticker As String
     Dim volume_ticker As String
     Dim great_value As Double
-    Dim bad_value As Double
+    Dim bad_value As Variant
     Dim volume_value As Variant
     
         great_value = ws.Cells(3, 16)
@@ -107,21 +104,27 @@ Sub stock_data()
         End If
         
         If ws.Cells(i, 11).Value < volume_value Then
-            bad_value = es.Cells(i, 9).Value
+            bad_value = ws.Cells(i, 9).Value
             bad_ticker = ws.Cells(i, 9).Value
         End If
         
         If ws.Cells(i, 12).Value > volume_value Then
             volume_value = ws.Cells(i, 12).Value
-            ticker_volume = ws.calls(i, 9).Value
+            ticker_volume = ws.Cells(i, 9).Value
         End If
         
     ws.Range("o2") = great_ticker
+    ws.Range("o3") = bad_ticker
+    ws.Range("o4") = volume_ticker
+    ws.Range("p2") = great_value
+    ws.Range("p3") = bad_value
+    ws.Range("p4") = volume_value
+    ws.Range("p2") = NumberFormat = "0.00%"
+    ws.Range("p3") = NumberFormat = "0.00%"
+    
   
-Next i
+    Next i
 
 Next ws
 
 End Sub
-
-
